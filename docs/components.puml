@@ -1,0 +1,80 @@
+@startuml
+title: Open Catalogi
+footer: Open Catalogi | Components
+header: Components
+
+interface "F5 extern (port 443)" as f5extern
+interface "F5 intern (port 443)" as f5intern
+
+interface "Hipp (outd of scope)" as hipp
+
+cloud "Azure"{
+ [ADFS]  as identity
+}
+
+cloud "Internet"{
+actor "User" as user
+actor "Admin" as adminUser
+actor "Externe Catalogus" as externalCatalouge
+
+}
+
+
+cloud "Kubernetes"{
+
+package "Layer 5 (interaction)" {
+package "React NL Design" {
+ [User Interface]  as ui
+}
+
+package "Vue NL Design" {
+ [Admin Interface]  as admin
+}
+}
+
+
+package "Layer 4 (Logic)" as layer4 {
+ [Synchronysations]  as service
+}
+
+
+package "Layer 2 (API)" as layer2 {
+
+
+package "Open Catalogi App" {
+ [Search API] as SearchAPI
+ [CRUD API] as ObjectsAPI
+}
+
+
+}
+
+}
+
+package "Layer 1 (data)" {
+
+package "Search index" {
+ [Elastic Search]  as search
+}
+
+package "Object Store" {
+ [ORC]  as db
+}
+}
+
+externalCatalouge <..> hipp: PKIO
+hipp <..> SearchAPI: Catalogus uitwisselingen
+
+
+user <..> f5extern: Browser ANONIEM
+adminUser <..> f5intern : Browser MET JWT Claim
+f5extern <..> ui: Alleen openbare endpoints en objecten
+f5intern <..> admin: Alle endpionts
+ui <..> SearchAPI: Alle endpionts
+admin <..> ObjectsAPI: Alle endpionts
+ObjectsAPI  .down.> db: Persist
+SearchAPI  .down.> search: Look up
+layer2 .down.> identity: AUTH
+service .down.> ObjectsAPI: AUTH
+
+@enduml

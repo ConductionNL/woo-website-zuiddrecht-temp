@@ -1,0 +1,19 @@
+/*
+ *
+ * Generic, non-design-token rules only.
+ * Have a more specific rule? Add it to the theme.
+ *
+ */
+
+html,
+body {
+  margin: 0;
+}
+
+.utrecht-link > svg {
+  margin-inline-end: var(--utrecht-icon-gap);
+}
+
+.utrecht-link--html-a:any-link:hover {
+  font-weight: var(--utrecht-link-hover-font-weight);
+}

@@ -1,0 +1,313 @@
+openapi: 3.0.0
+x-stoplight:
+  id: yuexp2kp5l0bn
+info:
+  title: Woo
+  version: 1.0.0
+  contact:
+    name: Conduction B.V.
+    email: info@conduction.nl
+    url: 'https://conduction.nl'
+  description: The open api specification of the Woo api.
+servers:
+  - url: 'https://api.gateway.commonground.nu/api'
+tags:
+  - name: Publicaties
+    description: Operations related to publicaties
+paths:
+  /publicaties:
+    get:
+      tags:
+        - Publicaties
+      summary: Retrieve publication collection
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Publicatie'
+      x-stoplight:
+        id: rpubhvfqrqdnj
+      operationId: get-api-publicaties
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: organisatie.oin
+          description: Oin of a organisatie to filter on.
+        - schema:
+            type: string
+          in: query
+          name: categorie
+          description: Categorie to filter on.
+    parameters: []
+    post:
+      tags:
+        - Publicaties
+      summary: Create a publication
+      operationId: post-api-publicaties
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publicatie'
+      x-stoplight:
+        id: cmxc8o2uwsfh5
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publicatie'
+  '/publicaties/{id}':
+    get:
+      tags:
+        - Publicaties
+      summary: Retrieve a publication
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: UUID
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publicatie'
+      x-stoplight:
+        id: blywrcttz5w78
+      operationId: get-api-publicaties-id
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    put:
+      tags:
+        - Publicaties
+      summary: Update a publicatie
+      operationId: put-api-publicaties-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publicatie'
+      x-stoplight:
+        id: o4e45h2307f2x
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publicatie'
+    patch:
+      tags:
+        - Publicaties
+      summary: Modify a publicatie
+      operationId: patch-api-publicaties-id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Publicatie'
+      x-stoplight:
+        id: v6cg1kxlrly75
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Publicatie'
+    delete:
+      tags:
+        - Publicaties
+      summary: Delete a publicatie
+      operationId: delete-api-publicaties-id
+      responses:
+        '200':
+          description: OK
+      x-stoplight:
+        id: c3gcpyq1cpbyd
+components:
+  schemas:
+    Publicatie:
+      title: Publicatie
+      type: object
+      x-stoplight:
+        id: u3fp2thl8x4gh
+      properties:
+        themas:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/Thema'
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+        bijlagen:
+          type: array
+          items:
+            $ref: '#/components/schemas/Bijlage'
+        organisatie:
+          $ref: '#/components/schemas/Organisatie'
+        publicatiedatum:
+          type: string
+          description: Publicatiedatum van een Woo object is nooit in de toekomst.
+          nullable: true
+        portalUrl:
+          type: string
+          format: url
+          nullable: true
+        categorie:
+          type: string
+          nullable: true
+        samenvatting:
+          type: string
+          nullable: true
+        beschrijving:
+          type: string
+          nullable: true
+        titel:
+          type: string
+          nullable: true
+        id:
+          type: string
+          nullable: true
+      required:
+        - publicatiedatum
+        - categorie
+    Bijlage:
+      title: Bijlage
+      description: ''
+      required:
+        - titel
+      properties:
+        id:
+          type: string
+          nullable: true
+        type:
+          type: string
+          nullable: true
+        status:
+          type: string
+          nullable: true
+        tijdstipLaatsteWijziging:
+          type: string
+          format: datetime
+          description: 'format: Y-m-d\TH:i:s'
+          nullable: true
+        titel:
+          type: string
+          nullable: true
+        label:
+          type: string
+          nullable: true
+        url:
+          type: string
+          format: url
+          nullable: true
+      type: object
+    Thema:
+      title: Thema
+      description: ''
+      required:
+        - hoofdthema
+      properties:
+        hoofdthema:
+          type: string
+          nullable: true
+        subthema:
+          type: string
+          nullable: true
+        aanvullendThema:
+          type: string
+          nullable: true
+      type: object
+      x-stoplight:
+        id: 7gt7doqn8h0m8
+    Metadata:
+      title: Metadata
+      description: Metadata object for Woo object
+      type: object
+      x-stoplight:
+        id: 31jmc8oflqx2c
+      properties:
+        verzoek:
+          $ref: '#/components/schemas/Verzoek'
+        volgnummer:
+          type: string
+          nullable: true
+        besluitdatum:
+          type: string
+          description: 'format: Y-m-d'
+          nullable: true
+    Verzoek:
+      title: Verzoek
+      x-stoplight:
+        id: 56i9nzzqso49v
+      type: object
+      properties:
+        status:
+          type: string
+          x-stoplight:
+            id: a0lyxynlsngzr
+          nullable: true
+        besluit:
+          $ref: '#/components/schemas/Bijlage'
+        informatieverzoek:
+          $ref: '#/components/schemas/Bijlage'
+        inventarisatielijst:
+          $ref: '#/components/schemas/Bijlage'
+        ontvangerInformatieverzoek:
+          type: string
+          x-stoplight:
+            id: mqe8yhthgzr3y
+          nullable: true
+        ontvangstdatum:
+          type: string
+          x-stoplight:
+            id: 4rczhsjn4wre8
+          description: 'format: Y-m-d'
+          nullable: true
+        termijnoverschrijding:
+          type: string
+          x-stoplight:
+            id: 46gyaah3a2k6s
+          nullable: true
+    Organisatie:
+      title: Organisatie
+      description: ''
+      required:
+        - naam
+      properties:
+        id:
+          type: string
+          nullable: true
+        uuid:
+          type: string
+          nullable: true
+        oin:
+          type: string
+          nullable: true
+        tooi:
+          type: string
+          nullable: true
+        rsin:
+          type: string
+          nullable: true
+        naam:
+          type: string
+          nullable: true
+      type: object
+      x-stoplight:
+        id: aid3hp8gyqdgb

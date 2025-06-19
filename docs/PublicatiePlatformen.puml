@@ -1,0 +1,31 @@
+@startuml
+title Publicatie platformen
+footer: OpenWoo.app
+header: OpenWoo.app
+
+' Publicatie platformen (Laag 5 UI)
+frame "Publicatie platformen " {
+    actor "KOOP"  as KOOP #cce5ff
+    actor   "WOOGLE" as WOOGLE #cce5ff
+    actor "Open Catalogi" AS OpenCatalogi #1abc9c
+    interface "KoopHulpje" AS KoopHulpje #1abc9c
+    interface "Website" AS Website #1abc9c
+    interface "Thema site" as Themasite #1abc9c
+    interface "Zoek pagina" as Searchsite #1abc9c
+}
+
+' API's (Laag 2)
+frame "API's (Laag 2)" {
+    database "Search API"  as OI #1abc9c
+}
+
+
+' Relationships
+KOOP -down-> OI : Indexeerd (XML Sitemap)
+WOOGLE -down-> OI : Indexeerd (API)
+OpenCatalogi -down-> OI : Bevraagd (API)
+KoopHulpje -down-> OI : Bevraagd (API)
+Website -down-> OI : Bevraagd (API)
+Themasite -down-> OI : Bevraagd (API)
+Searchsite -down-> OI : Bevraagd (API)
+@enduml

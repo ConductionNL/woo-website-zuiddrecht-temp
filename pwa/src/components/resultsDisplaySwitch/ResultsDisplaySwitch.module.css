@@ -1,0 +1,26 @@
+.container {
+  align-items: center;
+  flex-wrap: nowrap !important;
+  margin-inline-start: 12px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 992px) {
+  /* Tablet */
+  .container {
+    margin-inline-start: unset;
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 576px) {
+  /* Mobile */
+  .container {
+    margin-inline-start: unset;
+    justify-content: center;
+    display: flex;
+  }
+}
