@@ -1,4 +1,0 @@
-/* Handles svg margins that are not handled by --utrecht-icon-gap */
-svg.octicon {
-  margin-inline-end: 8px;
-}
